@@ -1,0 +1,91 @@
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int MAX = 10;
+
+int graph[MAX][MAX];
+int path[MAX];
+bool visited[MAX];
+
+void printHamiltonianCycle(int n) {
+    cout << "Hamiltonian Cycle: ";
+    for (int i = 0; i < n; i++) {
+        cout << path[i] << " ";
+    }
+    cout << path[0] << endl;
+}
+
+bool isSafe(int v, int pos, int n) {
+    if (graph[path[pos - 1]][v] == 0) {
+        return false;
+    }
+
+    if (visited[v]) {
+        return false;
+    }
+
+    return true;
+}
+
+bool hamiltonianCycleUtil(int pos, int n) {
+    if (pos == n) {
+        if (graph[path[pos - 1]][path[0]] == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    for (int v = 1; v < n; v++) {
+        if (isSafe(v, pos, n)) {
+            path[pos] = v;
+            visited[v] = true;
+
+            if (hamiltonianCycleUtil(pos + 1, n)) {
+                return true;
+            }
+
+            path[pos] = -1;
+            visited[v] = false;
+        }
+    }
+
+    return false;
+}
+
+bool hamiltonianCycle(int n) {
+    for (int i = 0; i < n; i++) {
+        path[i] = -1;
+        visited[i] = false;
+    }
+
+    path[0] = 0;
+    visited[0] = true;
+
+    if (hamiltonianCycleUtil(1, n)) {
+        printHamiltonianCycle(n);
+        return true;
+    }
+
+    cout << "No Hamiltonian Cycle exists." << endl;
+    return false;
+}
+
+int main() {
+    int n;
+    cout << "Enter the number of vertices: ";
+    cin >> n;
+
+    cout << "Enter the adjacency matrix: " << endl;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            cin >> graph[i][j];
+        }
+    }
+
+    hamiltonianCycle(n);
+
+    return 0;
+}
