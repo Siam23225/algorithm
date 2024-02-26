@@ -1,0 +1,25 @@
+#include <iostream>
+#include <map>
+
+using namespace std;
+
+int main()
+{
+    int n; cin >> n;
+
+    map<string, int> mp;
+    for(int i = 0; i < n; i++)
+    {
+        string s; cin >> s;
+        int a; cin >> a;
+
+        mp[s] = a;
+    }
+
+    string toFind; cin >> toFind;
+
+    if(mp[toFind]) cout << "Age of " << toFind << " is : " << mp[toFind] << endl;
+    else cout << "Data not found" << endl;
+
+    return 0;
+}
