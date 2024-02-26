@@ -1,0 +1,21 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+void hanoi(int n, int f, int to, int tem)
+{
+	if(n == 1)
+	{
+		cout << f << " " << to << endl;
+		return;
+	}
+	hanoi(n - 1, f, tem, to);
+	cout << f << " " << to << endl;
+	hanoi(n - 1, tem, to, f);
+}
+
+int main()
+{
+	int n; cin >> n;
+	hanoi(n, 1, 3, 2);
+}
