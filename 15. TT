@@ -1,0 +1,116 @@
+#include <iostream>
+
+using namespace std;
+
+struct tree
+{
+    int data;
+    struct tree *left, *right;
+};
+
+struct tree* create()
+{
+    struct tree *newtree;
+    newtree = (struct tree *) malloc(sizeof(struct tree));
+
+    int x;
+    cin >> x;
+
+    if(x == -1) return NULL;
+
+    newtree -> data = x;
+
+    cout << "Enter left data: ";
+    newtree -> left = create();
+
+    cout << "Enter right data: ";
+    newtree -> right = create();
+
+    return newtree;
+}
+
+void preorder(struct tree* root)
+{
+    if(root == NULL) return;
+
+    cout << root -> data << ' ';
+    preorder(root -> left);
+    preorder(root -> right);
+}
+
+void inorder(struct tree* root)
+{
+    if(root == NULL) return;
+
+    inorder(root -> left);
+    cout << root -> data << ' ';
+    inorder(root -> right);
+};
+
+void postorder(struct tree* root)
+{
+    if(root == NULL) return;
+
+    postorder(root -> left);
+    postorder(root -> right);
+    cout << root -> data << ' ';
+}
+
+int main()
+{
+    struct tree *root;
+    root = NULL;
+
+    while(1)
+    {
+        cout << "Press--" << endl
+             << "   1. Insert data" << endl
+             << "   2. Pre-order trevers" << endl
+             << "   3. In-Order travers" << endl
+             << "   4. Post-order travers" << endl
+             << "   0. Exit" << endl;
+        int n; cin >> n;
+
+        switch(n)
+        {
+        case 1:
+            cout << "Enter data: ";
+            root = create();
+            break;
+        case 2:
+            cout << "Preorder travers: ";
+            if(root == NULL)
+            {
+                cout << "Tree is empty!" << endl;
+                break;
+            }
+            preorder(root);
+            cout << endl;
+            break;
+        case 3:
+            cout << "Inorder travers: ";
+            if(root == NULL)
+            {
+                cout << "Tree is empty!" << endl;
+                break;
+            }
+            inorder(root);
+            cout << endl;
+            break;
+        case 4:
+            cout << "Postorder travers: ";
+            if(root == NULL)
+            {
+                cout << "Tree is empty!" << endl;
+                break;
+            }
+            postorder(root);
+            cout << endl;
+            break;
+        case 0:
+            return 0;
+        default:
+            cout << "Invalid Input!" << endl;
+        }
+    }
+}
