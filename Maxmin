@@ -1,0 +1,58 @@
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+struct Pair
+{
+	int max, min;
+};
+
+Pair maxmin(int a[], int l, int h)
+{
+	Pair result, left, right;
+	int mid;
+	if(l == h)
+	{
+		result.max = a[l];
+		result.min = a[h];
+		return result;
+	}
+	else if(l == h - 1)
+	{
+		if(a[l] < a[h])
+		{
+			result.max = a[h];
+			result.min = a[l];
+		}
+		else
+		{
+			result.max = a[l];
+			result.min = a[h];
+		}
+
+		return result;
+	}
+
+    mid = (l + h) / 2;
+	left = maxmin(a, l, mid);
+	right = maxmin(a, mid+1, h);
+	result.max = (left.max > right.max) ? left.max : right.max;
+	result.min = (left.min < right.min) ? left.min : right.min;
+
+	return result;
+}
+
+int main()
+{
+	int n; cin >> n;
+	int a[n]; for(int i = 0; i < n; i++) cin >> a[i];
+
+	Pair result = maxmin(a, 0, n - 1);
+	cout << result.max << " " << result.min;
+
+	return 0;
+}
+
+
+
